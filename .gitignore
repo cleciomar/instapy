@@ -1,13 +1,19 @@
+<<<<<<< HEAD
 # pylint file
 googlecl-pylint.rc.txt
 assets/chromedriver
+=======
+>>>>>>> 1302d46ead886e5446aa8339fa113c1927a2d92c
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
 
+<<<<<<< HEAD
 quickstart.py
 
+=======
+>>>>>>> 1302d46ead886e5446aa8339fa113c1927a2d92c
 # C extensions
 *.so
 
@@ -25,6 +31,10 @@ lib64/
 parts/
 sdist/
 var/
+<<<<<<< HEAD
+=======
+wheels/
+>>>>>>> 1302d46ead886e5446aa8339fa113c1927a2d92c
 *.egg-info/
 .installed.cfg
 *.egg
@@ -47,7 +57,11 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+<<<<<<< HEAD
 *,cover
+=======
+*.cover
+>>>>>>> 1302d46ead886e5446aa8339fa113c1927a2d92c
 .hypothesis/
 
 # Translations
@@ -71,7 +85,11 @@ docs/_build/
 # PyBuilder
 target/
 
+<<<<<<< HEAD
 # IPython Notebook
+=======
+# Jupyter Notebook
+>>>>>>> 1302d46ead886e5446aa8339fa113c1927a2d92c
 .ipynb_checkpoints
 
 # pyenv
@@ -80,21 +98,43 @@ target/
 # celery beat schedule file
 celerybeat-schedule
 
+<<<<<<< HEAD
+=======
+# SageMath parsed files
+*.sage.py
+
+>>>>>>> 1302d46ead886e5446aa8339fa113c1927a2d92c
 # dotenv
 .env
 
 # virtualenv
+<<<<<<< HEAD
+=======
+.venv
+>>>>>>> 1302d46ead886e5446aa8339fa113c1927a2d92c
 venv/
 ENV/
 
 # Spyder project settings
 .spyderproject
+<<<<<<< HEAD
+=======
+.spyproject
+>>>>>>> 1302d46ead886e5446aa8339fa113c1927a2d92c
 
 # Rope project settings
 .ropeproject
 
+<<<<<<< HEAD
 # Mac files
 .DS_Store
 
 # Editors
 .idea
+=======
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+>>>>>>> 1302d46ead886e5446aa8339fa113c1927a2d92c

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <img src="https://i.imgur.com/sJzfZsL.jpg" width="150" align="right">
 
 # InstaPy
@@ -633,3 +634,6 @@ Built-in delays prevent your account from getting banned. (Just make sure you do
 ###### Have Fun & Feel Free to report any issues
 ---
 
+=======
+# instapy
+>>>>>>> 1302d46ead886e5446aa8339fa113c1927a2d92c
