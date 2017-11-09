@@ -3,6 +3,7 @@ import csv
 import datetime
 import shutil
 import os
+import requests
 from .time_util import sleep
 from selenium.common.exceptions import NoSuchElementException
 from tempfile import NamedTemporaryFile
@@ -213,3 +214,13 @@ def formatNumber(number):
     formattedNum = number.replace(',', '').replace('.', '')
     formattedNum = int(formattedNum.replace('k', '00').replace('m', '00000'))
     return formattedNum
+
+def log_remotely(profile, action, text, url='http://log-bot.herokuapp.com', port='80'):
+        headers = {"content-type": "application/json"}
+        jsondata = '{"profilo": "'+profile+'", "action": "'+action+'", "text": "'+text+'"}'
+        try:
+            url=url+":"+str(port)
+            response = requests.post(url, data=jsondata, headers=headers)
+        except Exception as e:
+            print("Failed invoke web service at url "+url+".")
+            print("An exception was thrown: ",e)

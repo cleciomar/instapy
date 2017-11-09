@@ -39,6 +39,7 @@ from .unfollow_util import set_automated_followed_pool
 import random
 import csv
 import os
+import requests
 
 
 class InstaPy:
@@ -1126,6 +1127,7 @@ class InstaPy:
                                                             random,
                                                             sleep_delay,
                                                             self.blacklist)
+                
 
             except (TypeError, RuntimeWarning) as err:
                 if isinstance(err, RuntimeWarning):
@@ -1176,6 +1178,7 @@ class InstaPy:
                                                             random,
                                                             sleep_delay,
                                                             self.blacklist)
+                
 
             except (TypeError, RuntimeWarning) as err:
                 if isinstance(err, RuntimeWarning):
@@ -1484,3 +1487,5 @@ class InstaPy:
 
         with open('./logs/followed.txt', 'w') as followFile:
             followFile.write(str(self.followed))
+	
+    

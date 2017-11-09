@@ -1,22 +1,20 @@
 from instapy import InstaPy
 
-insta_username = ''
-insta_password = ''
+insta_username = 'insanitravel'
+insta_password = 'macbookpro'
 
 # if you want to run this script on a server, 
 # simply add nogui=True to the InstaPy() constructor
 session = InstaPy(username=insta_username, password=insta_password)
 session.login()
 
-# set up all the settings
-session.set_upper_follower_count(limit=2500)
-session.set_do_comment(True, percentage=10)
-session.set_comments(['aMEIzing!', 'So much fun!!', 'Nicey!'])
-session.set_dont_include(['friend1', 'friend2', 'friend3'])
-session.set_dont_like(['pizza', 'girl'])
-
-# do the actual liking
-session.like_by_tags(['natgeo', 'world'], amount=100)
+# For 50% of the 30 newly followed, move to their profile
+# and randomly choose 5 pictures to be liked.
+# Take into account the other set options like the comment rate
+# and the filtering for inappropriate words or users
+while True:
+	session.set_user_interact(amount=5, random=True, percentage=50, media='Photo')
+	session.follow_user_followers(['campeveryday', 'folkscenery', 'folkgreen'], amount=2, random=False, interact=True)
 
 # end the bot session
 session.end()
