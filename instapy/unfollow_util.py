@@ -221,7 +221,7 @@ def follow_user(browser, follow_restrict, login, user_name, blacklist):
             update_activity('follows')
 
         print('--> Now following')
-        log_remotely("insanitravel", "follow", "User: " + str(user_name))
+        #log_remotely("insanitravel", "follow", "User: " + str(user_name))
         log_followed_pool(login, user_name)
         follow_restrict[user_name] = follow_restrict.get(user_name, 0) + 1
         if blacklist['enabled'] is True:
@@ -264,7 +264,7 @@ def follow_given_user(browser, acc_to_follow, follow_restrict, blacklist):
         follow_button.send_keys("\n")
         update_activity('follows')
         print('---> Now following: {}'.format(acc_to_follow))
-        log_remotely("insanitravel", "follow", "User: " + str(acc_to_follow))
+        #log_remotely("insanitravel", "follow", "User: " + str(acc_to_follow))
         follow_restrict[acc_to_follow] = follow_restrict.get(
             acc_to_follow, 0) + 1
 
@@ -385,7 +385,7 @@ def follow_through_dialog(browser,
                 print('--> Ongoing follow ' + str(followNum) +
                       ', now following: {}'
                       .format(person.encode('utf-8')))
-                log_remotely("insanitravel", "follow", "User: " + str(person.encode('utf-8')))
+                #log_remotely("insanitravel", "follow", "User: " + str(person.encode('utf-8')))
 
                 if blacklist['enabled'] is True:
                     action = 'followed'

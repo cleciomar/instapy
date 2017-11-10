@@ -14,8 +14,8 @@ def update_activity(action=None):
     comments, follows, unfollow)."""
 
     # workaround for windows users, they cant use it in this way, we need to
-    if os.name == 'nt':
-        return
+    #if os.name == 'nt':
+    #    return
 
     # file header
     fieldnames = [
@@ -30,6 +30,10 @@ def update_activity(action=None):
         with open('./logs/activity.csv', 'r') as activity, tmpfile:
             reader = csv.DictReader(activity)
             writer = csv.DictWriter(tmpfile, fieldnames=fieldnames)
+
+            #LOG REMOTE
+            #if action != None:
+                #log_remotely("insanitravel", action, "tbd")
 
             # add header to the new file (temporary file)
             writer.writeheader()
