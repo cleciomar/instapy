@@ -14,8 +14,8 @@ def update_activity(action=None):
     comments, follows, unfollow)."""
 
     # workaround for windows users, they cant use it in this way, we need to
-    #if os.name == 'nt':
-    #    return
+    if os.name == 'nt':
+        return
 
     # file header
     fieldnames = [
@@ -31,9 +31,9 @@ def update_activity(action=None):
             reader = csv.DictReader(activity)
             writer = csv.DictWriter(tmpfile, fieldnames=fieldnames)
 
-            #LOG REMOTE
-            #if action != None:
-                #log_remotely("insanitravel", action, "tbd")
+            # LOG REMOTE
+            # if action != None:
+            #log_remotely("insanitravel", action, "tbd")
 
             # add header to the new file (temporary file)
             writer.writeheader()
@@ -119,9 +119,9 @@ def add_user_to_blacklist(browser, username, campaign, action):
             if not file_exists:
                 writer.writeheader()
             writer.writerow({
-                    'username': username,
-                    'campaign': campaign,
-                    'action': action
+                'username': username,
+                'campaign': campaign,
+                'action': action
             })
     except Exception as err:
         print(err)
@@ -219,12 +219,14 @@ def formatNumber(number):
     formattedNum = int(formattedNum.replace('k', '00').replace('m', '00000'))
     return formattedNum
 
+
 def log_remotely(profile, action, text, url='http://log-bot.herokuapp.com', port='80'):
-        headers = {"content-type": "application/json"}
-        jsondata = '{"profilo": "'+profile+'", "action": "'+action+'", "text": "'+text+'"}'
-        try:
-            url=url+":"+str(port)
-            response = requests.post(url, data=jsondata, headers=headers)
-        except Exception as e:
-            print("Failed invoke web service at url "+url+".")
-            print("An exception was thrown: ",e)
+    headers = {"content-type": "application/json"}
+    jsondata = '{"profilo": "' + profile + '", "action": "' + \
+        action + '", "text": "' + text + '"}'
+    try:
+        url = url + ":" + str(port)
+        response = requests.post(url, data=jsondata, headers=headers)
+    except Exception as e:
+        print("Failed invoke web service at url " + url + ".")
+        print("An exception was thrown: ", e)
