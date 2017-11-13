@@ -206,7 +206,7 @@ def unfollow(browser,
         except BaseException as e:
             print("unfollow loop error \n", str(e))
     
-    log_action(username,'unfollow','{:%Y-%m-%d %H:%M} {}'.format(datetime.now(), "[End] Unfollowe {} users".format(int(unfollowNum))))
+    log_action(username,'unfollow','{:%Y-%m-%d %H:%M} {}'.format(datetime.now(), "[End] Unfollow {} users".format(int(unfollowNum))))
     
     return unfollowNum
 

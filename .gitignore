@@ -98,3 +98,6 @@ ENV/
 
 # Editors
 .idea
+logs/followerNum.txt
+logs/instavivoescrivo_followedPool.csv
+logs/timeLog.txt
