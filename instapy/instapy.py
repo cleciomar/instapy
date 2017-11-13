@@ -22,9 +22,11 @@ from .like_util import like_image
 from .like_util import get_links_for_username
 from .login_util import login_user
 from .print_log_writer import log_follower_num
+from .print_log_writer import log_action
 from .time_util import sleep
 from .time_util import set_sleep_percentage
 from .util import get_active_users
+from .util import log_remotely
 from .unfollow_util import get_given_user_followers
 from .unfollow_util import get_given_user_following
 from .unfollow_util import unfollow
@@ -36,6 +38,7 @@ from .unfollow_util import follow_given_user
 from .unfollow_util import load_follow_restriction
 from .unfollow_util import dump_follow_restriction
 from .unfollow_util import set_automated_followed_pool
+import time
 import random
 import csv
 import os
@@ -104,6 +107,8 @@ class InstaPy:
         self.like_by_followers_lower_limit = 0
 
         self.aborting = False
+
+        self.followers = 0
 
         if selenium_local_session:
             self.set_selenium_local_session()
@@ -199,7 +204,7 @@ class InstaPy:
             print('Logged in successfully!')
             self.logFile.write('Logged in successfully!\n')
 
-        log_follower_num(self.browser, self.username)
+        self.followers = log_follower_num(self.browser, self.username, self.followers)
 
         return self
 
@@ -369,6 +374,7 @@ class InstaPy:
                                               acc_to_follow,
                                               self.follow_restrict,
                                               self.blacklist)
+
                 self.followed += followed
                 self.logFile.write('Followed: {}\n'.format(str(followed)))
                 followed = 0
@@ -447,6 +453,7 @@ class InstaPy:
                             self.browser, user_name, self.blacklist
                         )
 
+
                         if liked:
                             liked_img += 1
                             checked_img = True
@@ -504,6 +511,7 @@ class InstaPy:
                                                         user_name,
                                                         self.blacklist)
 
+
                             else:
                                 print('--> Not following')
                                 sleep(1)
@@ -556,6 +564,9 @@ class InstaPy:
         tags = tags or []
 
         for index, tag in enumerate(tags):
+            self.followers = log_follower_num(self.browser, self.username, self.followers)
+            log_action(self.username,'like_by_tags','{:%Y-%m-%d %H:%M} {}'.format(datetime.now(), "[Start] Tag " + str(tag)))
+                
             print('Tag [{}/{}]'.format(index + 1, len(tags)))
             print('--> {}'.format(tag.encode('utf-8')))
             self.logFile.write('Tag [{}/[]]'.format(index + 1, len(tags)))
@@ -636,7 +647,7 @@ class InstaPy:
                                                            self.blacklist)
                             else:
                                 print('--> Not commented')
-                                sleep(1)
+                                sleep(2)
 
                             if (self.do_follow and
                                 user_name not in self.dont_include and
@@ -650,9 +661,10 @@ class InstaPy:
                                                         self.username,
                                                         user_name,
                                                         self.blacklist)
+
                             else:
                                 print('--> Not following')
-                                sleep(1)
+                                sleep(2)
                         else:
                             already_liked += 1
                     else:
@@ -661,9 +673,18 @@ class InstaPy:
                 except NoSuchElementException as err:
                     print('Invalid Page: {}'.format(err))
                     self.logFile.write('Invalid Page: {}\n'.format(err))
+                except Exception as ex:
+                    print('unknown error: {}'.format(ex))
+                    self.logFile.write('unknown error: {}\n'.format(err))
 
-                print('')
+                    print('')
                 self.logFile.write('\n')
+                
+                sleep(5)
+            
+            sleep_amount = 900
+            log_action(self.username,"like_by_tags",'{:%Y-%m-%d %H:%M} {}'.format(datetime.now(), "[Sleeping] "+str(sleep_amount)))
+            sleep(sleep_amount)
 
         print('Liked: {}'.format(liked_img))
         print('Already Liked: {}'.format(already_liked))
@@ -676,6 +697,8 @@ class InstaPy:
         self.logFile.write('Inappropriate: {}\n'.format(inap_img))
         self.logFile.write('Commented: {}\n'.format(commented))
         self.logFile.write('Followed: {}\n'.format(followed))
+
+        log_remotely('instavivoescrivo','like_by_tags','[REPORT] Liked: {}, Already Liked: {}, Inappropriate: {}, Commented: {}, Followed: {}'.format(liked_img, already_liked, inap_img, commented, followed))
 
         self.followed += followed
 
@@ -694,6 +717,9 @@ class InstaPy:
         usernames = usernames or []
 
         for index, username in enumerate(usernames):
+            self.followers = log_follower_num(self.browser, self.username, self.followers)
+            log_action(self.username,'like_by_users','{:%Y-%m-%d %H:%M} {}'.format(datetime.now(), "[Start] User " + str(username)))
+
             print('Username [{}/{}]'.format(index + 1, len(usernames)))
             print('--> {}'.format(username.encode('utf-8')))
             self.logFile.write(
@@ -720,6 +746,7 @@ class InstaPy:
                                         self.username,
                                         username,
                                         self.blacklist)
+
             else:
                 print('--> Not following')
                 sleep(1)
@@ -798,6 +825,7 @@ class InstaPy:
                                                            user_name,
                                                            comments,
                                                            self.blacklist)
+
                             else:
                                 print('--> Not commented')
                                 sleep(1)
@@ -819,6 +847,10 @@ class InstaPy:
                 print('-------------')
                 print("--> Given amount not fullfilled, "
                       "image pool reached its end\n")
+            else:          
+               sleep_amount = 300
+               log_action(self.username,"like_by_users",'{:%Y-%m-%d %H:%M} {}'.format(datetime.now(), "[Sleeping] "+str(sleep_amount)))
+               sleep(sleep_amount)
 
         print('Liked: {}'.format(total_liked_img))
         print('Already Liked: {}'.format(already_liked))
@@ -829,6 +861,8 @@ class InstaPy:
         self.logFile.write('Already Liked: {}\n'.format(already_liked))
         self.logFile.write('Inappropriate: {}\n'.format(inap_img))
         self.logFile.write('Commented: {}\n'.format(commented))
+
+        log_remotely('instavivoescrivo','like_by_users','[REPORT] Liked: {}, Already Liked: {}, Inappropriate: {}, Commented: {}'.format(liked_img, already_liked, inap_img, commented))
 
         return self
 
@@ -850,6 +884,9 @@ class InstaPy:
         usernames = usernames or []
 
         for index, username in enumerate(usernames):
+            self.followers = log_follower_num(self.browser, self.username, self.followers)
+            log_action(self.username,'interact_by_users','{:%Y-%m-%d %H:%M} {}'.format(datetime.now(), "[Start] User " + str(username)))
+
             print('Username [{}/{}]'.format(index + 1, len(usernames)))
             print('--> {}'.format(username.encode('utf-8')))
             self.logFile.write(
@@ -914,6 +951,7 @@ class InstaPy:
                                 self.username,
                                 username,
                                 self.blacklist)
+
                         else:
                             print('--> Not following')
                             sleep(1)
@@ -923,6 +961,7 @@ class InstaPy:
                             liked = like_image(
                                 self.browser, user_name, self.blacklist
                             )
+
                         else:
                             liked = True
 
@@ -965,6 +1004,8 @@ class InstaPy:
                                                            user_name,
                                                            comments,
                                                            self.blacklist)
+
+
                             else:
                                 print('--> Not commented')
                                 sleep(1)
@@ -985,6 +1026,10 @@ class InstaPy:
                 print('-------------')
                 print("--> Given amount not fullfilled, image pool "
                       "reached its end\n")
+            else:          
+               sleep_amount = 600
+               log_action(self.username,"interact_by_users",'{:%Y-%m-%d %H:%M} {}'.format(datetime.now(), "[Sleeping] "+str(sleep_amount)))
+               sleep(sleep_amount)
 
         print('Liked: {}'.format(total_liked_img))
         print('Already Liked: {}'.format(already_liked))
@@ -995,6 +1040,8 @@ class InstaPy:
         self.logFile.write('Already Liked: {}\n'.format(already_liked))
         self.logFile.write('Inappropriate: {}\n'.format(inap_img))
         self.logFile.write('Commented: {}\n'.format(commented))
+
+        log_remotely('instavivoescrivo','interact_by_users','[REPORT] Liked: {}, Already Liked: {}, Inappropriate: {}, Commented: {}'.format(liked_img, already_liked, inap_img, commented))
 
         return self
 
@@ -1023,6 +1070,7 @@ class InstaPy:
 
     def interact_user_followers(self, usernames, amount=10, random=False):
 
+        log_action(self.username,'interact_user_followers','{:%Y-%m-%d %H:%M} {}'.format(datetime.now(), "[Start]"))
         userToInteract = []
         if not isinstance(usernames, list):
             usernames = [usernames]
@@ -1062,9 +1110,11 @@ class InstaPy:
                            self.user_interact_random,
                            self.user_interact_media)
 
+        log_action(self.username,'interact_user_followers','{:%Y-%m-%d %H:%M} {}'.format(datetime.now(), "[End]"))
         return self
 
     def interact_user_following(self, usernames, amount=10, random=False):
+        log_action(self.username,'interact_user_following','{:%Y-%m-%d %H:%M} {}'.format(datetime.now(), "[Start]"))
 
         userToInteract = []
         if not isinstance(usernames, list):
@@ -1102,6 +1152,7 @@ class InstaPy:
                            self.user_interact_random,
                            self.user_interact_media)
 
+        log_action(self.username,'interact_user_following','{:%Y-%m-%d %H:%M} {}'.format(datetime.now(), "[End]"))
         return self
 
     def follow_user_followers(self,
@@ -1120,12 +1171,14 @@ class InstaPy:
                 userFollowed += follow_given_user_followers(self.browser,
                                                             user,
                                                             amount,
+
                                                             self.dont_include,
                                                             self.username,
                                                             self.follow_restrict,
                                                             random,
                                                             sleep_delay,
                                                             self.blacklist)
+
 
             except (TypeError, RuntimeWarning) as err:
                 if isinstance(err, RuntimeWarning):
@@ -1176,6 +1229,7 @@ class InstaPy:
                                                             random,
                                                             sleep_delay,
                                                             self.blacklist)
+
 
             except (TypeError, RuntimeWarning) as err:
                 if isinstance(err, RuntimeWarning):
@@ -1391,6 +1445,7 @@ class InstaPy:
                                             self.username,
                                             user_name,
                                             self.blacklist)
+
                                     else:
                                         print('--> Not following')
                                         sleep(1)

@@ -8,6 +8,7 @@ from .util import formatNumber
 from .util import update_activity
 from .util import add_user_to_blacklist
 from .print_log_writer import log_followed_pool
+from .print_log_writer import log_action
 from selenium.common.exceptions import NoSuchElementException
 import random
 
@@ -41,6 +42,8 @@ def unfollow(browser,
              sleep_delay):
 
     """unfollows the given amount of users"""
+    log_action(self.username,'unfollow','{:%Y-%m-%d %H:%M} {}'.format(datetime.now()), "[Start] Unfollowing {} users".format(str(amount)))
+    
     unfollowNum = 0
 
     browser.get('https://www.instagram.com/' + username)
@@ -79,8 +82,8 @@ def unfollow(browser,
                 if unfollowNum != 0 and \
                    hasSlept is False and \
                    unfollowNum % 10 == 0:
-                        print('sleeping for about {}min'
-                              .format(int(sleep_delay/60)))
+                        print('sleeping for about {}min'.format(int(sleep_delay/60)))
+                        log_action(self.username,'unfollow','{:%Y-%m-%d %H:%M} {}'.format(datetime.now()), "[Sleeping] {} minutes".format(int(sleep_delay/60)))
                         sleep(sleep_delay)
                         hasSlept = True
                         continue
@@ -127,8 +130,7 @@ def unfollow(browser,
     elif onlyInstapyFollowed is not True:
         # Unfollow from profile
         try:
-            following_link = browser.find_elements_by_xpath(
-                '//header/div[2]//li[3]')
+            following_link = browser.find_elements_by_xpath('//*[@id="react-root"]/section/main/article/ul/li[3]/a')#('//header/div[2]//li[3]')
             following_link[0].click()
             # update server calls
             update_activity()
@@ -138,8 +140,7 @@ def unfollow(browser,
         sleep(2)
 
         # find dialog box
-        dialog = browser.find_element_by_xpath(
-            '/html/body/div[4]/div/div/div[2]/div/div[2]')
+        dialog = browser.find_element_by_xpath('/html/body/div[4]/div/div/div[2]/div/div[2]')
 
         # scroll down the page
         scroll_bottom(browser, dialog, allfollowing)
@@ -193,7 +194,9 @@ def unfollow(browser,
 
         except BaseException as e:
             print("unfollow loop error \n", str(e))
-
+    
+    log_action(self.username,'unfollow','{:%Y-%m-%d %H:%M} {}'.format(datetime.now()), "[End] Unfollowe {} users".format(int(unfollowNum)))
+    
     return unfollowNum
 
 
@@ -262,6 +265,7 @@ def follow_given_user(browser, acc_to_follow, follow_restrict, blacklist):
         follow_button.send_keys("\n")
         update_activity('follows')
         print('---> Now following: {}'.format(acc_to_follow))
+
         follow_restrict[acc_to_follow] = follow_restrict.get(
             acc_to_follow, 0) + 1
 
@@ -553,6 +557,7 @@ def follow_given_user_followers(browser,
                                 delay,
                                 blacklist):
 
+
     browser.get('https://www.instagram.com/' + user_name)
     # update server calls
     update_activity()
@@ -599,6 +604,7 @@ def follow_given_user_following(browser,
                                 delay,
                                 blacklist):
 
+
     browser.get('https://www.instagram.com/' + user_name)
     # update server calls
     update_activity()
@@ -630,6 +636,7 @@ def follow_given_user_following(browser,
                                            random,
                                            delay,
                                            blacklist)
+
 
     return personFollowed
 
