@@ -1,6 +1,7 @@
 """Module which handles the follow features like unfollowing and following"""
 import json
 import csv
+from datetime import datetime
 from .time_util import sleep
 from .util import delete_line_from_file
 from .util import scroll_bottom
@@ -42,7 +43,7 @@ def unfollow(browser,
              sleep_delay):
 
     """unfollows the given amount of users"""
-    log_action(self.username,'unfollow','{:%Y-%m-%d %H:%M} {}'.format(datetime.now()), "[Start] Unfollowing {} users".format(str(amount)))
+    log_action(username,'unfollow','{:%Y-%m-%d %H:%M} {}'.format(datetime.now(), "[Start] Unfollowing {} users".format(str(amount))))
     
     unfollowNum = 0
 
@@ -82,8 +83,8 @@ def unfollow(browser,
                 if unfollowNum != 0 and \
                    hasSlept is False and \
                    unfollowNum % 10 == 0:
-                        print('sleeping for about {}min'.format(int(sleep_delay/60)))
-                        log_action(self.username,'unfollow','{:%Y-%m-%d %H:%M} {}'.format(datetime.now()), "[Sleeping] {} minutes".format(int(sleep_delay/60)))
+                        print('sleeping for about {} min'.format(int(sleep_delay/60)))
+                        log_action(username,'unfollow','{:%Y-%m-%d %H:%M} {}'.format(datetime.now(), "[Sleeping] {} minutes".format(int(sleep_delay/60))))
                         sleep(sleep_delay)
                         hasSlept = True
                         continue
@@ -129,14 +130,25 @@ def unfollow(browser,
 
     elif onlyInstapyFollowed is not True:
         # Unfollow from profile
-        try:
-            following_link = browser.find_elements_by_xpath('//*[@id="react-root"]/section/main/article/ul/li[3]/a')#('//header/div[2]//li[3]')
-            following_link[0].click()
-            # update server calls
-            update_activity()
-        except BaseException as e:
-            print("following_link error \n", str(e))
+        following_xpath1 = '//*[@id="react-root"]/section/main/article/header/section/ul/li[3]'
+        following_xpath2 = '//*[@id="react-root"]/section/main/article/ul/li[3]'
+        following_xpath3 = '//header/div[2]//li[3]'
 
+        try:
+            following_link = browser.find_elements_by_xpath(following_xpath1)
+        except BaseException as e:
+            try:
+                following_link = browser.find_elements_by_xpath(following_xpath2)
+            except BaseException as er:
+                try:
+                    following_link = browser.find_elements_by_xpath(following_xpath3)
+                except BaseException as err:
+                    print("Can't locate the following link \n", str(err))
+                    return 0
+                
+        following_link[0].click()
+        # update server calls
+        update_activity()
         sleep(2)
 
         # find dialog box
@@ -150,7 +162,6 @@ def unfollow(browser,
         person_list = []
 
         for person in person_list_a:
-
             if person and hasattr(person, 'text') and person.text:
                 person_list.append(person.text)
 
@@ -195,7 +206,7 @@ def unfollow(browser,
         except BaseException as e:
             print("unfollow loop error \n", str(e))
     
-    log_action(self.username,'unfollow','{:%Y-%m-%d %H:%M} {}'.format(datetime.now()), "[End] Unfollowe {} users".format(int(unfollowNum)))
+    log_action(username,'unfollow','{:%Y-%m-%d %H:%M} {}'.format(datetime.now(), "[End] Unfollowe {} users".format(int(unfollowNum))))
     
     return unfollowNum
 
