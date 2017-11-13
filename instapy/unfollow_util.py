@@ -132,7 +132,7 @@ def unfollow(browser,
         # Unfollow from profile
         following_xpath1 = '//*[@id="react-root"]/section/main/article/header/section/ul/li[3]'
         following_xpath2 = '//*[@id="react-root"]/section/main/article/ul/li[3]'
-        following_xpath3 = '//header/div[2]//li[3]'
+        following_xpath3 = '//article/ul//li[3]'
 
         try:
             following_link = browser.find_elements_by_xpath(following_xpath1)
