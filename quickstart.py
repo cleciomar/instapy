@@ -5,17 +5,14 @@ from datetime import datetime
 from random import randint
 from instapy import time_util
 
-<<<<<<< HEAD
 insta_username = 'insanitravel'
 insta_password = 'macbookpro'
-=======
 like100 = ['#outdoors','#explore','#travel','#travelgram','#instatravel','#wanderlust','#viaggiare']
 like80 = ['#globetrotter','#backpacker','#wandering','#thegreatoutdoors','#traveling','#travelling','#travelphotography','#traveler','#travelingram']
 like60 = ['#zainoinspalla','#esplorare','#explorer','#viaggio','#esploratore','#avventura','#traveller']
 like40 = ['#messico','#rivieramaya','#parigi','#coreadelsud','#emiratiarabi','#croazia','#getoutdoors','#liveoutdoors','#greatoutdoors','#scoprire']
 like20 = ['#landscape','#ladscapephotography','#landscapes','#wanderer','#stayandwander','#wander','#theglobewanderer','#adventure','#lifeofadventure','#adventures','#adventurer']
 like10 = ['#exploretocreate','#exploremore','#exploreeverything','#createexplore','#fitness','#fitnessaddict','#instafitness','#fitnessgirl','#workout','#instapic','#instapicture','#instapict','#instapics','#instagood','#instadaily','#instacool','#adventuretime','#adventureisoutthere']
->>>>>>> d81a1332564bb3fb9f477309de8db9cec0bcc2f7
 
 explore    = ['#explore','#exploretocreate','#exploremore','#exploreeverything','#createexplore','#explorer']    
 travel     = ['#travel','#travelgram','#instatravel','#traveling','#travelling','#travelphotography','#traveler','#travelingram','#traveller']    
@@ -35,15 +32,6 @@ session.set_comments(['excellent pic!','bella foto!','bella','nice photo!','bell
 session.set_unfollow_active_users(enabled=False, posts=5)
 session.login()
 
-<<<<<<< HEAD
-# For 50% of the 30 newly followed, move to their profile
-# and randomly choose 5 pictures to be liked.
-# Take into account the other set options like the comment rate
-# and the filtering for inappropriate words or users
-while True:
-	session.set_user_interact(amount=5, random=True, percentage=50, media='Photo')
-	session.follow_user_followers(['campeveryday', 'folkscenery', 'folkgreen'], amount=2, random=False, interact=True)
-=======
 while(True):
     session.set_do_comment(enabled=True, percentage=20)
     session.set_do_follow(enabled=True, percentage=10)
@@ -88,7 +76,6 @@ while(True):
     session.like_by_tags(fitness, amount=10, skip_top_posts=False)
     session.like_by_tags(insta, amount=10, skip_top_posts=False)
     session.like_by_tags(italiani, amount=100, skip_top_posts=False)
->>>>>>> d81a1332564bb3fb9f477309de8db9cec0bcc2f7
 
     
 session.end()

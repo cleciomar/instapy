@@ -4,10 +4,7 @@ import datetime
 import shutil
 import os
 import requests
-<<<<<<< HEAD
-=======
 import json
->>>>>>> d81a1332564bb3fb9f477309de8db9cec0bcc2f7
 from .time_util import sleep
 from selenium.common.exceptions import NoSuchElementException
 from tempfile import NamedTemporaryFile
@@ -222,21 +219,8 @@ def formatNumber(number):
     formattedNum = int(formattedNum.replace('k', '00').replace('m', '00000'))
     return formattedNum
 
-<<<<<<< HEAD
-
 def log_remotely(profile, action, text, url='http://log-bot.herokuapp.com', port='80'):
-    headers = {"content-type": "application/json"}
-    jsondata = '{"profilo": "' + profile + '", "action": "' + \
-        action + '", "text": "' + text + '"}'
-    try:
-        url = url + ":" + str(port)
-        response = requests.post(url, data=jsondata, headers=headers)
-    except Exception as e:
-        print("Failed invoke web service at url " + url + ".")
-        print("An exception was thrown: ", e)
-=======
-def log_remotely(profile, action, text, url='http://log-bot.herokuapp.com', port='80'):
-   headers = {"content-type": "application/json"}
+       headers = {"content-type": "application/json"}
    data = {}
    data["profilo"] = profile
    data["action"] = action
@@ -261,4 +245,3 @@ def log_remotely(profile, action, text, url='http://log-bot.herokuapp.com', port
 
 
 
->>>>>>> d81a1332564bb3fb9f477309de8db9cec0bcc2f7

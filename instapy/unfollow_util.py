@@ -136,15 +136,7 @@ def unfollow(browser,
         following_xpath3 = '//article/ul//li[3]'
 
         try:
-<<<<<<< HEAD
-            following_link = browser.find_elements_by_xpath(
-                '//article//ul//li[3]')
-            following_link[0].click()
-            # update server calls
-            update_activity()
-=======
             following_link = browser.find_elements_by_xpath(following_xpath1)
->>>>>>> d81a1332564bb3fb9f477309de8db9cec0bcc2f7
         except BaseException as e:
             try:
                 following_link = browser.find_elements_by_xpath(following_xpath2)
@@ -286,11 +278,6 @@ def follow_given_user(browser, acc_to_follow, follow_restrict, blacklist):
         follow_button.send_keys("\n")
         update_activity('follows')
         print('---> Now following: {}'.format(acc_to_follow))
-<<<<<<< HEAD
-        #log_remotely("insanitravel", "follow", "User: " + str(acc_to_follow))
-=======
-
->>>>>>> d81a1332564bb3fb9f477309de8db9cec0bcc2f7
         follow_restrict[acc_to_follow] = follow_restrict.get(
             acc_to_follow, 0) + 1
 
