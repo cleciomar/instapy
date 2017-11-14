@@ -220,19 +220,19 @@ def formatNumber(number):
     return formattedNum
 
 def log_remotely(profile, action, text, url='http://log-bot.herokuapp.com', port='80'):
-       headers = {"content-type": "application/json"}
-   data = {}
-   data["profilo"] = profile
-   data["action"] = action
-   data["text"] = text
-   jsondata = json.dumps(data)
-   try:
-      url=url+":"+str(port)
-      response = requests.post(url, data=jsondata, headers=headers)
-   except Exception as e:
-      print("log_remotely")
-      print("Failed to invoke web service at url "+url+".")
-      print("An exception was thrown: ",e)
+    headers = {"content-type": "application/json"}
+    data = {}
+    data["profilo"] = profile
+    data["action"] = action
+    data["text"] = text
+    jsondata = json.dumps(data)
+    try:
+        url=url+":"+str(port)
+        #response = requests.post(url, data=jsondata, headers=headers)
+    except Exception as e:
+        print("log_remotely")
+        print("Failed to invoke web service at url "+url+".")
+        print("An exception was thrown: ",e)
 
 
 

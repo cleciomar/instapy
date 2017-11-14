@@ -201,3 +201,6 @@
 2017-11-13 17:35 Followers: +2072 (2072), Following: 868
 2017-11-13 18:30 Followers: +1 (2073), Following: 818
 >>>>>>> d81a1332564bb3fb9f477309de8db9cec0bcc2f7
+2017-11-14 10:23 Followers: +166 (166), Following: 533
+2017-11-14 10:28 Followers: +166 (166), Following: 533
+2017-11-14 11:20 Followers: +6 (172), Following: 485

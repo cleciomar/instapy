@@ -27,7 +27,7 @@ mete       = ['#messico','#rivieramaya','#parigi','#coreadelsud','#emiratiarabi'
 i_user_followers = ['jannikobenhoff','orcundalarslan','antiguaandbarbuda','saraunderwood','chloe_t','kyrenian','jordhammond','thenomadsoasis','chelseakauai']
 i_user_following = ['enrico.onthewine','1mundoxver','darioportamialmare','sometravelago']
 
-session = InstaPy(username='instavivoescrivo', password='Herty2@868')
+session = InstaPy(username=insta_username, password=insta_password)
 session.set_comments(['excellent pic!','bella foto!','bella','nice photo!','bellissima','nice pic!','I really like it','mi piace!','che bella!','ottimo lavoro!','amazing!'], media='Photo')
 session.set_unfollow_active_users(enabled=False, posts=5)
 session.login()
