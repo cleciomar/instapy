@@ -131,6 +131,7 @@ ENV/
 
 # Editors
 .idea
+<<<<<<< HEAD
 =======
 # mkdocs documentation
 /site
@@ -138,3 +139,8 @@ ENV/
 # mypy
 .mypy_cache/
 >>>>>>> 1302d46ead886e5446aa8339fa113c1927a2d92c
+=======
+logs/followerNum.txt
+logs/instavivoescrivo_followedPool.csv
+logs/timeLog.txt
+>>>>>>> d81a1332564bb3fb9f477309de8db9cec0bcc2f7

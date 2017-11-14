@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Session started - 2017-11-09 13:05:10
 error_msg
 Session started - 2017-11-09 13:22:11
@@ -338,3 +339,17 @@ Username [1/[]]--> b'avi2654'
 [2/5]https://www.instagram.com/p/BbSg16FHiYZ/?taken-by=avi2654
 [3/5]https://www.instagram.com/p/BZSpXK4HkTa/?taken-by=avi2654
 [4/5]https://www.instagram.com/p/BbSgO7cnzvR/?taken-by=avi2654
+=======
+Session started - 2017-11-13 17:02:17
+error_msg
+Logged in successfully!
+Session started - 2017-11-13 17:04:03
+error_msg
+Logged in successfully!
+Session started - 2017-11-13 17:04:57
+error_msg
+Logged in successfully!
+Session started - 2017-11-13 17:06:43
+error_msg
+Logged in successfully!
+>>>>>>> d81a1332564bb3fb9f477309de8db9cec0bcc2f7

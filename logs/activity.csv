@@ -1,2 +1,6 @@
 date,likes,comments,follows,unfollows,server_calls
+<<<<<<< HEAD
 11/10/17,0,0,0,0,1
+=======
+11/13/17,0,0,0,0,1
+>>>>>>> d81a1332564bb3fb9f477309de8db9cec0bcc2f7

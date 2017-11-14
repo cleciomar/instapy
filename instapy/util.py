@@ -4,6 +4,10 @@ import datetime
 import shutil
 import os
 import requests
+<<<<<<< HEAD
+=======
+import json
+>>>>>>> d81a1332564bb3fb9f477309de8db9cec0bcc2f7
 from .time_util import sleep
 from selenium.common.exceptions import NoSuchElementException
 from tempfile import NamedTemporaryFile
@@ -205,11 +209,10 @@ def scroll_bottom(browser, element, range_int):
         range_int = 50
 
     for i in range(int(range_int / 2)):
-        browser.execute_script(
-            "arguments[0].scrollTop = arguments[0].scrollHeight", element)
+        browser.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", element)
         # update server calls
         update_activity()
-        sleep(1)
+        sleep(3)
 
     return
 
@@ -219,6 +222,7 @@ def formatNumber(number):
     formattedNum = int(formattedNum.replace('k', '00').replace('m', '00000'))
     return formattedNum
 
+<<<<<<< HEAD
 
 def log_remotely(profile, action, text, url='http://log-bot.herokuapp.com', port='80'):
     headers = {"content-type": "application/json"}
@@ -230,3 +234,31 @@ def log_remotely(profile, action, text, url='http://log-bot.herokuapp.com', port
     except Exception as e:
         print("Failed invoke web service at url " + url + ".")
         print("An exception was thrown: ", e)
+=======
+def log_remotely(profile, action, text, url='http://log-bot.herokuapp.com', port='80'):
+   headers = {"content-type": "application/json"}
+   data = {}
+   data["profilo"] = profile
+   data["action"] = action
+   data["text"] = text
+   jsondata = json.dumps(data)
+   try:
+      url=url+":"+str(port)
+      response = requests.post(url, data=jsondata, headers=headers)
+   except Exception as e:
+      print("log_remotely")
+      print("Failed to invoke web service at url "+url+".")
+      print("An exception was thrown: ",e)
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> d81a1332564bb3fb9f477309de8db9cec0bcc2f7
