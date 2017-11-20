@@ -44,7 +44,7 @@ Table of Contents
   * [Interact with users that someone else is following](#interact-with-users-that-someone-else-is-following)
   * [Interact with someone else's followers](#interact-with-someone-elses-followers)
   * [Unfollowing](#unfollowing)
-  * [Prevents unfollow active users](#prevents-unfollow-active-users)
+  * [Don't unfollow active users](#dont-unfollow-active-users)
   * [Interactions based on the number of followers a user has](#interactions-based-on-the-number-of-followers-a-user-has)
   * [Like by Locations](#like-by-locations)
   * [Like by Tags](#like-by-tags)
@@ -54,6 +54,7 @@ Table of Contents
   * [Ignoring Restrictions](#ignoring-restrictions)
   * [Excluding friends](#excluding-friends)
   * [Blacklist Campaign](#blacklist-campaign)
+  * [Smart Hashtags](#smart-hashtags)
   * [Follow/Unfollow/exclude not working?](#followunfollowexclude-not-working)
 * [Third Party InstaPy GUI for Windows](#third-party-instapy-gui-for-windows)
 * [Switching to Firefox](#switching-to-firefox)
@@ -70,6 +71,8 @@ Table of Contents
 
 ### Video tutorials:
 **[Setting up InstaPy for OSX](https://www.youtube.com/watch?v=I025CEBJCvQ)**
+
+**[Setting up InstaPy at Digital Ocean (for Debian)](https://www.youtube.com/watch?v=2Ci-hXU1IEY)**
 
 ### Guides:
 **[How to Ubuntu (64-Bit)](./docs/How_To_DO_Ubuntu_on_Digital_Ocean.md) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**
@@ -269,14 +272,19 @@ session.interact_user_followers(['natgeo'], amount=10, random=True)
 # is 10min
 
 session.unfollow_users(amount=10, onlyInstapyFollowed = True, onlyInstapyMethod = 'FIFO', sleep_delay=60 )
+
+# You can only unfollow user that won't follow you back by adding
+# onlyNotFollowMe = True it still only support on profile following 
+# you should disable onlyInstapyFollowed when use this 
+session.unfollow_users(amount=10, onlyNotFollowMe=True, sleep_delay=60)
 ```
 
-### Prevents unfollow active users
+### Don't unfollow active users
 
 ```python
 # Prevents unfollow followers who have liked one of your latest 5 posts
 
-session.set_unfollow_active_users(enabled=False, posts=5)
+session.set_dont_unfollow_active_users(enabled=False, posts=5)
 ```
 
 ### Interactions based on the number of followers a user has
@@ -350,6 +358,20 @@ session.set_do_comment(True, percentage=50)
 session.set_comments(['Neymar is better than CR7', 'Soccer is cool'])
 session.like_by_tags(['soccer', 'cr7', 'neymar'], amount=100, media='Photo')
 
+```
+
+### Smart Hashtags
+
+```python
+# Generate smart hashtags based on https://displaypurposes.com ranking,
+# banned and spammy tags are filtered out.
+# (limit) defines amount limit of generated hashtags by hashtag
+# (sort) sort generated hashtag list 'top' and 'random' are available
+# (log_tags) shows generated hashtags before use it
+# (use_smart_hashtags) activates like_by_tag to use smart hashtags
+
+session.set_smart_hashtags(['cycling', 'roadbike'], limit=3, sort='top', log_tags=True)
+session.like_by_tags(amount=10, use_smart_hashtags=True)
 ```
 
 ### Restricting Likes
